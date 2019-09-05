@@ -7,9 +7,6 @@ public class HomeBean {
 
     private List<ArticleBean.Article> topArticles;
 
-    private List<HotkeyBean> hotkeyBeans;
-
-    private List<FriendBean> friendBeans;
 
     public List<BannerBean> getBanners() {
         return banners;
@@ -25,21 +22,5 @@ public class HomeBean {
 
     public void setTopArticles(List<ArticleBean.Article> topArticles) {
         this.topArticles = topArticles;
-    }
-
-    public List<HotkeyBean> getHotkeyBeans() {
-        return hotkeyBeans;
-    }
-
-    public void setHotkeyBeans(List<HotkeyBean> hotkeyBeans) {
-        this.hotkeyBeans = hotkeyBeans;
-    }
-
-    public List<FriendBean> getFriendBeans() {
-        return friendBeans;
-    }
-
-    public void setFriendBeans(List<FriendBean> friendBeans) {
-        this.friendBeans = friendBeans;
     }
 }
