@@ -1,0 +1,53 @@
+if(!isNeedProjectModule.toBoolean()) {
+    apply plugin: 'com.android.application'
+}else{
+    apply plugin: 'com.android.library'
+    apply plugin: 'com.jakewharton.butterknife'
+}
+
+android {
+    compileSdkVersion 29
+    buildToolsVersion "29.0.2"
+
+    sourceSets{
+        main{
+            if (!isNeedProjectModule.toBoolean()) {
+                manifest.srcFile('src/main/debug/AndroidManifest.xml')
+            }else{
+                manifest.srcFile('src/main/AndroidManifest.xml')
+            }
+        }
+    }
+
+    defaultConfig {
+        if (!isNeedProjectModule.toBoolean()) {
+            applicationId "com.lsy.module_project"
+        }
+        minSdkVersion 21
+        targetSdkVersion 29
+        versionCode 1
+        versionName "1.0"
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [ AROUTER_MODULE_NAME : project.getName() ]
+            }
+        }
+
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    api project(path: ':lib_res')
+    api project(path: ':lib_net')
+}

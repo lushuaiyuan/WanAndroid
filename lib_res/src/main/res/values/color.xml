@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="app_color_theme_1">#2BBDF3</color> <!-- Grapefruit -->
+    <color name="app_color_theme_2">#FF5D5E</color> <!-- Bittersweet -->
+    <color name="app_color_theme_3">#FFCF47</color> <!-- Sunflower -->
+    <color name="app_color_theme_4">#9FD661</color> <!-- Grass -->
+    <color name="app_color_theme_5">#3FD0AD</color> <!-- Mint -->
+    <color name="app_color_theme_6">#EF5362</color> <!-- Aqua -->
+    <color name="app_color_theme_7">#5A9AEF</color> <!-- Blue Jeans -->
+    <color name="app_color_theme_8">#AC8FEF</color> <!-- Lavender -->
+    <color name="app_color_theme_9">#EE85C1</color> <!-- Pink Rose -->
+    <color name="bar_divider">#D4D6D8</color>
+
+    <color name="text_primary">#333333</color>
+    <color name="text_minor">#666666</color>
+    <color name="text_title">#999999</color>
+
+    <color name="tab_normal">#CDCDCD</color>
+    <color name="tab_selected">#FF5D5E</color>
+
+    <color name="item_background_pressed">#EEEFF1</color>
+    <color name="white">#FFFFFF</color>
+    <color name="item_background_normal">#FFFFFF</color>
+
+
+</resources>

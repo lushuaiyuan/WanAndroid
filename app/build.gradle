@@ -1,0 +1,54 @@
+apply plugin: 'com.android.application'
+apply plugin: 'com.jakewharton.butterknife'
+android {
+    compileSdkVersion 29
+    buildToolsVersion "29.0.2"
+
+    defaultConfig {
+        applicationId "com.lsy.wanandroid"
+        minSdkVersion 21
+        targetSdkVersion 29
+        versionCode 1
+        versionName "1.0"
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [ AROUTER_MODULE_NAME : project.getName() ]
+            }
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    annotationProcessor 'com.jakewharton:butterknife-compiler:10.1.0'
+    implementation project(path: ':lib_res')
+    if(isNeedHomeModule.toBoolean()){
+        implementation  project(':module_home')
+    }else{
+        implementation project(path: ':lib_net')
+    }
+    if(isNeedMineModule.toBoolean()) {
+        implementation project(':module_mine')
+    }
+    if(isNeedNavigationModule.toBoolean()) {
+        implementation project(':module_navigation')
+    }
+    if(isNeedOfficialAccountModule.toBoolean()) {
+        implementation project(':module_official_accounts')
+    }
+    if(isNeedProjectModule.toBoolean()) {
+        implementation project(':module_project')
+    }
+    if(isNeedSystemModule.toBoolean()) {
+        implementation project(':module_system')
+    }
+}

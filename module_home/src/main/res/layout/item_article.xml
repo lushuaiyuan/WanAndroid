@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/home_item_select_bg"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/dp_16"
+    android:paddingRight="@dimen/dp_16">
+
+    <ImageView
+        android:id="@+id/iv_collect"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_centerVertical="true"
+        android:src="@mipmap/ic_collect" />
+
+    <TextView
+        android:id="@+id/txt_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_16"
+        android:layout_marginBottom="@dimen/dp_8"
+        android:layout_toRightOf="@id/iv_collect"
+        android:text="title"
+        android:textColor="@color/text_primary"
+        android:textSize="@dimen/sp_16" />
+
+    <LinearLayout
+        android:id="@+id/ll_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txt_title"
+        android:layout_alignLeft="@id/txt_title"
+        android:layout_marginBottom="@dimen/dp_16">
+
+        <TextView
+            android:id="@+id/txt_tag1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/dp_8"
+            android:background="@drawable/shape_tag_orange"
+            android:paddingLeft="@dimen/dp_8"
+            android:paddingRight="@dimen/dp_8"
+            android:textColor="@color/app_color_theme_2"
+            android:textSize="@dimen/sp_10" />
+
+        <TextView
+            android:id="@+id/txt_tag2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/dp_8"
+            android:background="@drawable/shape_tag_green"
+            android:paddingLeft="@dimen/dp_8"
+            android:paddingRight="@dimen/dp_8"
+            android:textColor="@android:color/holo_green_light"
+            android:textSize="@dimen/sp_10" />
+
+        <TextView
+            android:id="@+id/txt_author_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/author"
+            android:textColor="@color/text_title"
+            android:textSize="@dimen/sp_10" />
+
+        <TextView
+            android:id="@+id/txt_author"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text_minor"
+            android:textSize="@dimen/sp_10" />
+
+        <TextView
+            android:id="@+id/txt_classify_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_8"
+            android:text="@string/classify"
+            android:textColor="@color/text_title"
+            android:textSize="@dimen/sp_10" />
+
+        <TextView
+            android:id="@+id/txt_classify"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/txt_classify_title"
+            android:layout_toRightOf="@id/txt_classify_title"
+            android:textColor="@color/text_minor"
+            android:textSize="@dimen/sp_10" />
+
+
+        <TextView
+            android:id="@+id/txt_time_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/txt_classify"
+            android:layout_marginLeft="@dimen/dp_8"
+            android:layout_toRightOf="@id/txt_classify"
+            android:text="@string/time"
+            android:textColor="@color/text_title"
+            android:textSize="@dimen/sp_10"
+            android:visibility="gone"/>
+
+        <TextView
+            android:id="@+id/txt_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/txt_time_title"
+            android:layout_toRightOf="@id/txt_time_title"
+            android:textColor="@color/text_title"
+            android:textSize="@dimen/sp_10"
+            android:visibility="gone"/>
+    </LinearLayout>
+
+    <View
+        style="@style/MyView"
+        android:layout_below="@id/ll_content" />
+
+
+</RelativeLayout>
