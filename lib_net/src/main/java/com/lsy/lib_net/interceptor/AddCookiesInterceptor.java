@@ -19,7 +19,7 @@ public class AddCookiesInterceptor implements Interceptor {
     @Override
     public Response intercept(Chain chain) throws IOException {
         Request.Builder builder = chain.request().newBuilder();
-        HashSet<String> cookies = (HashSet<String>) SPUtils.getInstance(Constant.SPNANEM).getStringSet(Constant.COOKIE);
+        HashSet<String> cookies = (HashSet<String>) SPUtils.getInstance(Constant.SPNANEM).getStringSet(Constant.COOKIE, new HashSet<String>());
         if (cookies != null) {
             for (String cookie : cookies) {
                 builder.addHeader("Cookie", cookie);

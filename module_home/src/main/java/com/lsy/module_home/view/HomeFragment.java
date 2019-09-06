@@ -1,10 +1,13 @@
 package com.lsy.module_home.view;
 
+import android.view.LayoutInflater;
+import android.view.View;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.lsy.lib_base.base.BaseFragment;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.lsy.lib_base.base.BaseMvpFragment;
 import com.lsy.lib_base.utils.GlideImageLoader;
 import com.lsy.lib_net.bean.ArticleBean;
@@ -32,13 +35,11 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
     QMUITopBarLayout qmuiTopBarLayout;
     @BindView(R2.id.mSmartRefreshLayout)
     SmartRefreshLayout mSmartRefreshLayout;
-    @BindView(R2.id.mBanner)
-    Banner mBanner;
     @BindView(R2.id.mRecyclerView)
     RecyclerView mRecycleView;
+    Banner mBanner;
     private List<ArticleBean.Article> topArticleList = new ArrayList<>();
     private List<ArticleBean.Article> articleList = new ArrayList<>();
-    private List<BannerBean> bannerList = new ArrayList<>();
     private ArticleAdapter articleAdapter;
     private int pageIndex = 0;
 
@@ -52,6 +53,7 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
         initView();
         mPresenter = new HomePresenter();
         mPresenter.attachView(this);
+        showLoading();
         mPresenter.getHomeData();
     }
 
@@ -59,6 +61,10 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
         qmuiTopBarLayout.setTitle("首页");
         mRecycleView.setLayoutManager(new LinearLayoutManager(mActivity));
         articleAdapter = new ArticleAdapter(articleList);
+        View view = LayoutInflater.from(mActivity).inflate(R.layout.item_banner, null);
+        mBanner = view.findViewById(R.id.mBanner);
+        articleAdapter.addHeaderView(view, 0);
+        articleAdapter.openLoadAnimation(BaseQuickAdapter.ALPHAIN);
         mRecycleView.setAdapter(articleAdapter);
         mSmartRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
@@ -70,8 +76,7 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 pageIndex = 0;
-                articleList.clear();
-                topArticleList.clear();
+
                 mPresenter.getHomeData();
             }
         });
@@ -79,6 +84,7 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
 
     @Override
     public void onSuccess(Optional<HomeBean> homeBeanResponseData) {
+        hideLoading();
         //轮播显示
         List<BannerBean> includeNull = homeBeanResponseData.getIncludeNull().getBanners();
         List<String> images = new ArrayList<>();
@@ -91,13 +97,18 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
         mBanner.setImages(images);
         //banner设置方法全部调用完毕时最后调用
         mBanner.start();
-
+        if(pageIndex == 0) {
+            articleList.clear();
+            topArticleList.clear();
+        }
+        topArticleList = homeBeanResponseData.getIncludeNull().getTopArticles();
         mPresenter.articleList(pageIndex);
     }
 
     @Override
     public void onError(Throwable throwable) {
         super.onError(throwable);
+        hideLoading();
         endRefresh(mSmartRefreshLayout);
     }
 

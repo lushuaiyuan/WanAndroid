@@ -2,4 +2,5 @@
 <resources>
     <color name="refresh_head_title">#ff666666</color>
     <color name="app_color_theme_2">#FF5D5E</color>
+    <color name="view_color">#DEE0E2</color>
 </resources>

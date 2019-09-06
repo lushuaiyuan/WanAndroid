@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <color name="app_color_theme_1">#2BBDF3</color> <!-- Grapefruit -->
     <color name="app_color_theme_2">#FF5D5E</color> <!-- Bittersweet -->
     <color name="app_color_theme_3">#FFCF47</color> <!-- Sunflower -->
@@ -9,18 +10,25 @@
     <color name="app_color_theme_7">#5A9AEF</color> <!-- Blue Jeans -->
     <color name="app_color_theme_8">#AC8FEF</color> <!-- Lavender -->
     <color name="app_color_theme_9">#EE85C1</color> <!-- Pink Rose -->
-    <color name="bar_divider">#D4D6D8</color>
 
+    <color name="color_green">#ff99cc00</color>
+    <!--文字颜色-->
     <color name="text_primary">#333333</color>
     <color name="text_minor">#666666</color>
     <color name="text_title">#999999</color>
-
+    <color name="text_blue">#4282f4</color>
+    <!--底部导航栏颜色-->
     <color name="tab_normal">#CDCDCD</color>
     <color name="tab_selected">#FF5D5E</color>
-
-    <color name="item_background_pressed">#EEEFF1</color>
-    <color name="white">#FFFFFF</color>
+    <color name="bar_divider">#D4D6D8</color>
+    
+    <!--item 颜色-->
     <color name="item_background_normal">#FFFFFF</color>
+    <color name="item_background_pressed">#EEEFF1</color>
+
+    <color name="white">#FFFFFF</color>
+
+    <color name="bg_dark">#c5c5c5</color>
 
 
 </resources>

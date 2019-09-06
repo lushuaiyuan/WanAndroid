@@ -1,6 +1,9 @@
 package com.lsy.lib_base.exception;
 
+import com.blankj.utilcode.util.NetworkUtils;
+import com.blankj.utilcode.util.StringUtils;
 import com.google.gson.JsonParseException;
+import com.lsy.lib_base.R;
 
 import org.json.JSONException;
 
@@ -9,47 +12,79 @@ import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 import java.text.ParseException;
 
+import javax.net.ssl.SSLException;
+
+import retrofit2.HttpException;
+
 public class CustomException {
-    /**
-     * 未知错误
-     */
-    public static final int UNKNOWN = 1000;
 
-    /**
-     * 解析错误
-     */
-    public static final int PARSE_ERROR = 1001;
-
-    /**
-     * 网络错误
-     */
-    public static final int NETWORK_ERROR = 1002;
-
-    /**
-     * 协议错误
-     */
-    public static final int HTTP_ERROR = 1003;
 
     public static ApiException handleException(Throwable e) {
-        ApiException ex;
-        if (e instanceof JsonParseException
-                || e instanceof JSONException
-                || e instanceof ParseException) {
-            //解析错误
-            ex = new ApiException(PARSE_ERROR, e.getMessage());
-            return ex;
-        } else if (e instanceof ConnectException) {
-            //网络错误
-            ex = new ApiException(NETWORK_ERROR, e.getMessage());
-            return ex;
-        } else if (e instanceof UnknownHostException || e instanceof SocketTimeoutException) {
-            //连接错误
-            ex = new ApiException(NETWORK_ERROR, e.getMessage());
-            return ex;
+        int code = onGetCode(e);
+        return new ApiException(code, onGetMsg(code));
+    }
+
+    private static int onGetCode(Throwable e) {
+        if (!NetworkUtils.isConnected()) {
+            return Code.NET;
         } else {
-            //未知错误
-            ex = new ApiException(UNKNOWN, e.getMessage());
-            return ex;
+            if (e instanceof SocketTimeoutException) {
+                return Code.TIMEOUT;
+            } else if (e instanceof HttpException) {
+                return Code.HTTP;
+            } else if (e instanceof UnknownHostException || e instanceof ConnectException) {
+                return Code.HOST;
+            } else if (e instanceof JsonParseException || e instanceof ParseException || e instanceof JSONException) {
+                return Code.JSON;
+            } else if (e instanceof SSLException) {
+                return Code.SSL;
+            } else {
+                return Code.UNKNOWN;
+            }
         }
+    }
+
+    /**
+     * 重写该方法去返回错误码对应的错误信息
+     *
+     * @param code 错误码
+     * @return 错误信息
+     */
+    private static String onGetMsg(int code) {
+        String msg;
+        switch (code) {
+            default:
+                msg = StringUtils.getString(R.string.error_default);
+                break;
+            case Code.NET:
+                msg = StringUtils.getString(R.string.error_net);
+                break;
+            case Code.TIMEOUT:
+                msg = StringUtils.getString(R.string.error_timeout);
+                break;
+            case Code.JSON:
+                msg = StringUtils.getString(R.string.error_json);
+                break;
+            case Code.HTTP:
+                msg = StringUtils.getString(R.string.error_http);
+                break;
+            case Code.HOST:
+                msg = StringUtils.getString(R.string.error_host);
+                break;
+            case Code.SSL:
+                msg = StringUtils.getString(R.string.error_SSL);
+                break;
+        }
+        return msg;
+    }
+
+    public interface Code {
+        int UNKNOWN = -1;
+        int NET = 0;
+        int TIMEOUT = 1;
+        int JSON = 2;
+        int HTTP = 3;
+        int HOST = 4;
+        int SSL = 5;
     }
 }

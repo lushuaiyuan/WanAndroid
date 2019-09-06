@@ -1,121 +1,168 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/dp_5"
     android:background="@drawable/home_item_select_bg"
     android:orientation="vertical"
-    android:paddingLeft="@dimen/dp_16"
-    android:paddingRight="@dimen/dp_16">
+    android:padding="@dimen/dp_16">
 
-    <ImageView
-        android:id="@+id/iv_collect"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:layout_centerVertical="true"
-        android:src="@mipmap/ic_collect" />
-
-    <TextView
-        android:id="@+id/txt_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/dp_10"
-        android:layout_marginTop="@dimen/dp_16"
-        android:layout_marginBottom="@dimen/dp_8"
-        android:layout_toRightOf="@id/iv_collect"
-        android:text="title"
-        android:textColor="@color/text_primary"
-        android:textSize="@dimen/sp_16" />
-
-    <LinearLayout
-        android:id="@+id/ll_content"
+    <RelativeLayout
+        android:id="@+id/rl_top"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/txt_title"
-        android:layout_alignLeft="@id/txt_title"
-        android:layout_marginBottom="@dimen/dp_16">
+        android:gravity="center_vertical">
 
-        <TextView
-            android:id="@+id/txt_tag1"
+        <LinearLayout
+            android:id="@+id/ll_new"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/dp_8"
-            android:background="@drawable/shape_tag_orange"
-            android:paddingLeft="@dimen/dp_8"
-            android:paddingRight="@dimen/dp_8"
-            android:textColor="@color/app_color_theme_2"
-            android:textSize="@dimen/sp_10" />
+            android:layout_height="0dp"
+            android:layout_alignTop="@+id/txt_author"
+            android:layout_alignBottom="@+id/txt_author"
+            android:layout_centerVertical="true">
 
-        <TextView
-            android:id="@+id/txt_tag2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/dp_8"
-            android:background="@drawable/shape_tag_green"
-            android:paddingLeft="@dimen/dp_8"
-            android:paddingRight="@dimen/dp_8"
-            android:textColor="@android:color/holo_green_light"
-            android:textSize="@dimen/sp_10" />
+            <TextView
+                android:id="@+id/txt_tag1"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignTop="@+id/tv_author"
+                android:layout_alignBottom="@+id/tv_author"
+                android:text="新"
+                android:textColor="@color/text_blue"
+                android:textSize="@dimen/text_notes" />
 
-        <TextView
-            android:id="@+id/txt_author_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/author"
-            android:textColor="@color/text_title"
-            android:textSize="@dimen/sp_10" />
+            <View
+                android:layout_width="2dp"
+                android:layout_height="2dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="3dp"
+                android:layout_marginRight="3dp"
+                android:background="@drawable/bg_solid_round_color_bg_dark_radius_max" />
+
+        </LinearLayout>
 
         <TextView
             android:id="@+id/txt_author"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/ll_new"
+            android:text="hahah"
             android:textColor="@color/text_minor"
-            android:textSize="@dimen/sp_10" />
+            android:textSize="@dimen/text_notes" />
 
         <TextView
-            android:id="@+id/txt_classify_title"
+            android:id="@+id/txt_tag2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dp_8"
-            android:text="@string/classify"
-            android:textColor="@color/text_title"
-            android:textSize="@dimen/sp_10" />
-
-        <TextView
-            android:id="@+id/txt_classify"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@id/txt_classify_title"
-            android:layout_toRightOf="@id/txt_classify_title"
-            android:textColor="@color/text_minor"
-            android:textSize="@dimen/sp_10" />
-
-
-        <TextView
-            android:id="@+id/txt_time_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@id/txt_classify"
-            android:layout_marginLeft="@dimen/dp_8"
-            android:layout_toRightOf="@id/txt_classify"
-            android:text="@string/time"
-            android:textColor="@color/text_title"
-            android:textSize="@dimen/sp_10"
-            android:visibility="gone"/>
+            android:layout_alignTop="@+id/txt_author"
+            android:layout_alignBottom="@+id/txt_author"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@+id/txt_author"
+            android:background="@drawable/shape_tag_green"
+            android:gravity="center"
+            android:paddingLeft="@dimen/dp_5"
+            android:paddingRight="@dimen/dp_5"
+            android:text="项目"
+            android:textColor="@color/color_green"
+            android:textSize="@dimen/text_notes" />
 
         <TextView
             android:id="@+id/txt_time"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@id/txt_time_title"
-            android:layout_toRightOf="@id/txt_time_title"
+            android:layout_height="0dp"
+            android:layout_alignTop="@+id/txt_author"
+            android:layout_alignBottom="@+id/txt_author"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:text="21小时前"
             android:textColor="@color/text_title"
-            android:textSize="@dimen/sp_10"
-            android:visibility="gone"/>
+            android:textSize="@dimen/text_time" />
+
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:id="@+id/ll_middle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rl_top"
+        android:layout_marginTop="@dimen/dp_10"
+        android:orientation="horizontal">
+
+        <com.qmuiteam.qmui.widget.QMUIRadiusImageView
+            android:id="@+id/iv_img"
+            app:qmui_border_width="0dp"
+            android:layout_width="120dp"
+            android:layout_height="80dp"
+            android:layout_marginRight="10dp"
+            android:background="@color/qmui_config_color_background"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/image_holder"
+            android:visibility="gone"
+            app:qmui_corner_radius="3dp"
+            tools:visibility="visible" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txt_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:includeFontPadding="false"
+                android:lineSpacingExtra="0dp"
+                android:maxLines="3"
+                android:singleLine="false"
+                android:textColor="@color/text_primary"
+                android:textSize="@dimen/text_content"
+                tools:singleLine="true"
+                tools:text="公众号文章列表强势上线公众号文章列表强势公众号文章列表强势上线公众号文章列表强势" />
+
+            <TextView
+                android:id="@+id/tv_desc"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="5dp"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:includeFontPadding="true"
+                android:lineSpacingExtra="0dp"
+                android:maxLines="3"
+                android:textColor="@color/text_minor"
+                android:textSize="@dimen/text_auxiliary"
+                android:visibility="gone"
+                tools:text="公众号文章列表强势上线"
+                tools:visibility="visible" />
+
+        </LinearLayout>
+
     </LinearLayout>
 
-    <View
-        style="@style/MyView"
-        android:layout_below="@id/ll_content" />
 
+    <TextView
+        android:id="@+id/txt_classify"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ll_middle"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/text_minor"
+        android:textSize="@dimen/text_notes"
+        tools:text="动画效果" />
+
+
+    <ImageView
+        android:id="@+id/iv_collect"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_alignBottom="@+id/txt_classify"
+        android:layout_alignParentRight="true"
+        android:src="@mipmap/ic_collect" />
 
 </RelativeLayout>

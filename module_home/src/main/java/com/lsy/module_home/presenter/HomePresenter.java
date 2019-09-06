@@ -51,11 +51,8 @@ public class HomePresenter extends BasePresenter<HomeContract.View> implements H
         if (!isViewAttached()) {
             return;
         }
-        mView.showLoading();
-
         Observable<ResponseData<List<BannerBean>>> bannerList = model.getBannerList();
         Observable<ResponseData<List<ArticleBean.Article>>> topArticleList = model.getTopArticleList();
-
         Observable.zip(bannerList, topArticleList, new BiFunction<ResponseData<List<BannerBean>>, ResponseData<List<ArticleBean.Article>>, ResponseData<HomeBean>>() {
             @Override
             public ResponseData<HomeBean> apply(ResponseData<List<BannerBean>> bannerList, ResponseData<List<ArticleBean.Article>> articleList) throws Exception {
@@ -71,13 +68,11 @@ public class HomePresenter extends BasePresenter<HomeContract.View> implements H
                 .subscribe(new Consumer<Optional<HomeBean>>() {
                     @Override
                     public void accept(Optional<HomeBean> homeBeanOptional) throws Exception {
-                        mView.hideLoading();
                         mView.onSuccess(homeBeanOptional);
                     }
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
-                        mView.hideLoading();
                         mView.onError(throwable);
                     }
                 });

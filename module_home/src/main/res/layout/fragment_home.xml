@@ -15,24 +15,12 @@
         android:layout_marginTop="?attr/qmui_topbar_height"
         android:fitsSystemWindows="true">
 
-        <LinearLayout
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/mRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <com.youth.banner.Banner
-                android:id="@+id/mBanner"
-                android:layout_width="match_parent"
-                android:layout_height="180dp" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/mRecyclerView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                tools:listitem="it" />
-
-        </LinearLayout>
-
+            tools:listitem="@layout/item_article" />
 
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
