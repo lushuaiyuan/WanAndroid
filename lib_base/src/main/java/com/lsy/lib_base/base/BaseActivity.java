@@ -21,8 +21,8 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ARouter.getInstance().inject(this);
         setContentView(getLayoutId());
+        ARouter.getInstance().inject(this);
         bind = ButterKnife.bind(this);
         QMUIStatusBarHelper.translucent(this);
         init();

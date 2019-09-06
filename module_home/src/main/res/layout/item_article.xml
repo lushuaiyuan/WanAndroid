@@ -1,13 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.qmuiteam.qmui.layout.QMUIRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:id="@+id/ll_home_item"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="@dimen/dp_5"
-    android:background="@drawable/home_item_select_bg"
-    android:orientation="vertical"
-    android:padding="@dimen/dp_16">
+    android:layout_marginLeft="@dimen/dp_8"
+    android:layout_marginRight="@dimen/dp_8"
+    android:layout_marginBottom="@dimen/dp_8"
+    android:background="@drawable/qmui_s_list_item_bg_with_border_none"
+    android:paddingLeft="11dp"
+    android:elevation="14dp"
+    android:alpha="0.25"
+    android:paddingTop="@dimen/dp_16"
+    android:paddingRight="11dp"
+    android:paddingBottom="@dimen/dp_16"
+    app:qmui_showBorderOnlyBeforeL="true">
+
 
     <RelativeLayout
         android:id="@+id/rl_top"
@@ -15,53 +24,39 @@
         android:layout_height="wrap_content"
         android:gravity="center_vertical">
 
-        <LinearLayout
-            android:id="@+id/ll_new"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_alignTop="@+id/txt_author"
-            android:layout_alignBottom="@+id/txt_author"
-            android:layout_centerVertical="true">
-
-            <TextView
-                android:id="@+id/txt_tag1"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_alignTop="@+id/tv_author"
-                android:layout_alignBottom="@+id/tv_author"
-                android:text="新"
-                android:textColor="@color/text_blue"
-                android:textSize="@dimen/text_notes" />
-
-            <View
-                android:layout_width="2dp"
-                android:layout_height="2dp"
-                android:layout_gravity="center"
-                android:layout_marginLeft="3dp"
-                android:layout_marginRight="3dp"
-                android:background="@drawable/bg_solid_round_color_bg_dark_radius_max" />
-
-        </LinearLayout>
 
         <TextView
             android:id="@+id/txt_author"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_toRightOf="@+id/ll_new"
             android:text="hahah"
             android:textColor="@color/text_minor"
+            android:textSize="@dimen/text_auxiliary" />
+
+        <TextView
+            android:id="@+id/txt_tag1"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignBottom="@+id/txt_author"
+            android:layout_marginLeft="@dimen/dp_8"
+            android:layout_toRightOf="@id/txt_author"
+            android:background="@drawable/shape_tag_orange"
+            android:paddingLeft="@dimen/dp_5"
+            android:paddingRight="@dimen/dp_5"
+            android:text="新"
+            android:textColor="@color/app_color_theme_2"
             android:textSize="@dimen/text_notes" />
 
         <TextView
             android:id="@+id/txt_tag2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/txt_author"
-            android:layout_alignBottom="@+id/txt_author"
+            android:layout_alignTop="@+id/txt_tag1"
+            android:layout_alignBottom="@+id/txt_tag1"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="5dp"
-            android:layout_toRightOf="@+id/txt_author"
+            android:layout_marginLeft="@dimen/dp_8"
+            android:layout_toRightOf="@+id/txt_tag1"
             android:background="@drawable/shape_tag_green"
             android:gravity="center"
             android:paddingLeft="@dimen/dp_5"
@@ -95,7 +90,6 @@
 
         <com.qmuiteam.qmui.widget.QMUIRadiusImageView
             android:id="@+id/iv_img"
-            app:qmui_border_width="0dp"
             android:layout_width="120dp"
             android:layout_height="80dp"
             android:layout_marginRight="10dp"
@@ -103,13 +97,10 @@
             android:scaleType="centerCrop"
             android:src="@mipmap/image_holder"
             android:visibility="gone"
+            app:qmui_border_width="0dp"
             app:qmui_corner_radius="3dp"
             tools:visibility="visible" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/txt_title"
@@ -124,24 +115,6 @@
                 android:textSize="@dimen/text_content"
                 tools:singleLine="true"
                 tools:text="公众号文章列表强势上线公众号文章列表强势公众号文章列表强势上线公众号文章列表强势" />
-
-            <TextView
-                android:id="@+id/tv_desc"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_marginTop="5dp"
-                android:layout_weight="1"
-                android:ellipsize="end"
-                android:includeFontPadding="true"
-                android:lineSpacingExtra="0dp"
-                android:maxLines="3"
-                android:textColor="@color/text_minor"
-                android:textSize="@dimen/text_auxiliary"
-                android:visibility="gone"
-                tools:text="公众号文章列表强势上线"
-                tools:visibility="visible" />
-
-        </LinearLayout>
 
     </LinearLayout>
 
@@ -165,4 +138,4 @@
         android:layout_alignParentRight="true"
         android:src="@mipmap/ic_collect" />
 
-</RelativeLayout>
+</com.qmuiteam.qmui.layout.QMUIRelativeLayout>

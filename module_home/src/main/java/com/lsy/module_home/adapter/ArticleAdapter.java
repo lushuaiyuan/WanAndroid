@@ -17,6 +17,8 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.lsy.lib_net.bean.ArticleBean;
 import com.lsy.module_home.R;
+import com.qmuiteam.qmui.layout.QMUIRelativeLayout;
+import com.qmuiteam.qmui.util.QMUIDisplayHelper;
 import com.youth.banner.loader.ImageLoader;
 
 import java.util.List;
@@ -30,6 +32,7 @@ public class ArticleAdapter extends BaseQuickAdapter<ArticleBean.Article, BaseVi
 
     @Override
     protected void convert(@NonNull BaseViewHolder helper, ArticleBean.Article item) {
+        ((QMUIRelativeLayout) helper.getView(R.id.ll_home_item)).setRadius(QMUIDisplayHelper.dp2px(mContext, 8));
         helper.setText(R.id.txt_title, item.getTitle())
                 .setText(R.id.txt_author, item.getAuthor())
                 .setText(R.id.txt_classify, item.getSuperChapterName() + "." + item.getChapterName())
@@ -46,21 +49,16 @@ public class ArticleAdapter extends BaseQuickAdapter<ArticleBean.Article, BaseVi
         } else {
             iv_img.setVisibility(View.GONE);
         }
-
-        LinearLayout llNew = helper.getView(R.id.ll_new);
         TextView tvTag1 = helper.getView(R.id.txt_tag1);
         if (item.getType() == 0) {
             if (item.isFresh()) {
-                llNew.setVisibility(View.VISIBLE);
-                tvTag1.setTextColor(ColorUtils.getColor(R.color.color_green));
+                tvTag1.setVisibility(View.VISIBLE);
                 tvTag1.setText("新");
             } else {
-                llNew.setVisibility(View.GONE);
+                tvTag1.setVisibility(View.GONE);
             }
         } else {
-            llNew.setVisibility(View.VISIBLE);
             tvTag1.setVisibility(View.VISIBLE);
-            tvTag1.setTextColor(ColorUtils.getColor(R.color.app_color_theme_2));
             tvTag1.setText("置顶");
         }
         if (item.getTags().size() > 0) {
