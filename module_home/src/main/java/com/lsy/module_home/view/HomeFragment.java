@@ -145,6 +145,7 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
                 .withString("title", bannerList.get(position).getTitle())
                 .withString("url", bannerList.get(position).getUrl())
                 .navigation();
+
     }
 
     @Override

@@ -1,15 +1,25 @@
 package com.lsy.module_home.view;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.ObjectAnimator;
+import android.app.Activity;
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.webkit.DownloadListener;
+import android.webkit.WebChromeClient;
 import android.webkit.WebView;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.ZoomButtonsController;
 
-import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.alibaba.android.arouter.launcher.ARouter;
 import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.lsy.lib_base.base.BaseActivity;
@@ -17,9 +27,16 @@ import com.lsy.lib_base.utils.RouterUtils;
 import com.lsy.lib_base.widget.QDWebView;
 import com.lsy.module_home.R;
 import com.lsy.module_home.R2;
+import com.qmuiteam.qmui.util.QMUILangHelper;
+import com.qmuiteam.qmui.util.QMUIResHelper;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
+import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
+import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
 import com.qmuiteam.qmui.widget.webview.QMUIWebView;
+import com.qmuiteam.qmui.widget.webview.QMUIWebViewClient;
 import com.qmuiteam.qmui.widget.webview.QMUIWebViewContainer;
+
+import java.lang.reflect.Field;
 
 import butterknife.BindView;
 
@@ -31,15 +48,17 @@ public class WebActivity extends BaseActivity implements View.OnClickListener {
     QMUITopBarLayout qmuiTopBar;
     @BindView(R2.id.webview_container)
     QMUIWebViewContainer webViewContainer;
+    @BindView(R2.id.progress_bar)
+    ProgressBar progressBar;
     QDWebView mWebView;
 
-    @Autowired
+    private ProgressHandler mProgressHandler;
+    private final static int PROGRESS_PROCESS = 0;
+    private final static int PROGRESS_GONE = 1;
+
     String title;
-    @Autowired
     String url;
-    @Autowired
     String link;
-    @Autowired
     Boolean collect;
 
     @Override
@@ -49,7 +68,32 @@ public class WebActivity extends BaseActivity implements View.OnClickListener {
 
     @Override
     public void init() {
-        ARouter.getInstance().inject(this);
+        mProgressHandler = new ProgressHandler();
+        Bundle extras = getIntent().getExtras();
+        link = extras.getString("link");
+        url = extras.getString("url");
+        title = extras.getString("title");
+        collect = extras.getBoolean("collect");
+        initTopBar();
+        initWebView();
+    }
+
+    private void initWebView() {
+        mWebView = new QDWebView(this);
+        webViewContainer.addWebView(mWebView, true);
+        mWebView.setWebChromeClient(getWebViewChromeClient());
+        mWebView.setWebViewClient(getWebViewClient());
+        mWebView.requestFocus(View.FOCUS_DOWN);
+        setZoomControlGone(mWebView);
+        configWebView(webViewContainer, mWebView);
+        if (StringUtils.isEmpty(link)) {
+            mWebView.loadUrl(url);
+        } else {
+            mWebView.loadUrl(link);
+        }
+    }
+
+    private void initTopBar() {
         qmuiTopBar.addLeftBackImageButton().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -64,35 +108,148 @@ public class WebActivity extends BaseActivity implements View.OnClickListener {
         ibMore.setOnClickListener(this);
         RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(WRAP_CONTENT, RelativeLayout.LayoutParams.MATCH_PARENT);
         qmuiTopBar.addRightView(view, R.id.home_right, layoutParams);
+    }
 
-        mWebView = new QDWebView(this);
-        boolean needDispatchSafeAreaInset = needDispatchSafeAreaInset();
-        webViewContainer.addWebView(mWebView, needDispatchSafeAreaInset);
-        if (StringUtils.isEmpty(link)) {
-            mWebView.loadUrl(url);
-        } else {
-            mWebView.loadUrl(link);
+    protected void configWebView(QMUIWebViewContainer webViewContainer, QMUIWebView webView) {
+        webView.setCallback(new QMUIWebView.Callback() {
+            @Override
+            public void onSureNotSupportChangeCssEnv() {
+                new QMUIDialog.MessageDialogBuilder(WebActivity.this)
+                        .setMessage("不支持更改css环境")
+                        .addAction(new QMUIDialogAction(WebActivity.this, "确定", new QMUIDialogAction.ActionListener() {
+
+                            @Override
+                            public void onClick(QMUIDialog dialog, int index) {
+                                dialog.dismiss();
+                            }
+                        }))
+                        .show();
+            }
+        });
+    }
+
+    public static void setZoomControlGone(WebView webView) {
+        webView.getSettings().setDisplayZoomControls(false);
+        @SuppressWarnings("rawtypes")
+        Class classType;
+        Field field;
+        try {
+            classType = WebView.class;
+            field = classType.getDeclaredField("mZoomButtonsController");
+            field.setAccessible(true);
+            ZoomButtonsController zoomButtonsController = new ZoomButtonsController(
+                    webView);
+            zoomButtonsController.getZoomControls().setVisibility(View.GONE);
+            try {
+                field.set(webView, zoomButtonsController);
+            } catch (IllegalArgumentException | IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        } catch (SecurityException | NoSuchFieldException e) {
+            e.printStackTrace();
         }
-        webViewContainer.setCustomOnScrollChangeListener(new QMUIWebView.OnScrollChangeListener(){
-            @Override
-            public void onScrollChange(WebView webView, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                onScrollWebContent(scrollX, scrollY, oldScrollX, oldScrollY);
-            }
-        });
-        mWebView.setDownloadListener(new DownloadListener() {
-            @Override
-            public void onDownloadStart(String url, String userAgent, String contentDisposition, String mimetype, long contentLength) {
-
-            }
-        });
-
-    }
-    protected boolean needDispatchSafeAreaInset() {
-        return false;
     }
 
-    protected void onScrollWebContent(int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+    protected WebChromeClient getWebViewChromeClient() {
+        return new ExplorerWebViewChromeClient(this);
+    }
 
+    protected QMUIWebViewClient getWebViewClient() {
+        return new ExplorerWebViewClient(true);
+    }
+
+    public static class ExplorerWebViewChromeClient extends WebChromeClient {
+        private WebActivity mActivity;
+
+        public ExplorerWebViewChromeClient(WebActivity activity) {
+            mActivity = activity;
+        }
+
+        @Override
+        public void onProgressChanged(WebView view, int newProgress) {
+            super.onProgressChanged(view, newProgress);
+            // 修改进度条
+            if (newProgress > mActivity.mProgressHandler.mDstProgressIndex) {
+                mActivity.sendProgressMessage(PROGRESS_PROCESS, newProgress, 100);
+            }
+        }
+    }
+
+    protected class ExplorerWebViewClient extends QMUIWebViewClient {
+
+        public ExplorerWebViewClient(boolean needDispatchSafeAreaInset) {
+            super(needDispatchSafeAreaInset, true);
+        }
+
+        @Override
+        public void onPageStarted(WebView view, String url, Bitmap favicon) {
+            super.onPageStarted(view, url, favicon);
+            if (mProgressHandler.mDstProgressIndex == 0) {
+                sendProgressMessage(PROGRESS_PROCESS, 30, 500);
+            }
+        }
+
+        @Override
+        public void onPageFinished(WebView view, String url) {
+            super.onPageFinished(view, url);
+            sendProgressMessage(PROGRESS_GONE, 100, 0);
+        }
+    }
+
+    private void sendProgressMessage(int progressType, int newProgress, int duration) {
+        Message msg = new Message();
+        msg.what = progressType;
+        msg.arg1 = newProgress;
+        msg.arg2 = duration;
+        mProgressHandler.sendMessage(msg);
+    }
+
+
+    private class ProgressHandler extends Handler {
+
+        private int mDstProgressIndex;
+        private int mDuration;
+        private ObjectAnimator mAnimator;
+
+
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case PROGRESS_PROCESS:
+                    mDstProgressIndex = msg.arg1;
+                    mDuration = msg.arg2;
+                    progressBar.setVisibility(View.VISIBLE);
+                    if (mAnimator != null && mAnimator.isRunning()) {
+                        mAnimator.cancel();
+                    }
+                    mAnimator = ObjectAnimator.ofInt(progressBar, "progress", mDstProgressIndex);
+                    mAnimator.setDuration(mDuration);
+                    mAnimator.addListener(new AnimatorListenerAdapter() {
+                        @Override
+                        public void onAnimationEnd(Animator animation) {
+                            if (progressBar.getProgress() == 100) {
+                                sendEmptyMessageDelayed(PROGRESS_GONE, 500);
+                            }
+                        }
+                    });
+                    mAnimator.start();
+                    break;
+                case PROGRESS_GONE:
+                    mDstProgressIndex = 0;
+                    mDuration = 0;
+                    progressBar.setProgress(0);
+                    progressBar.setVisibility(View.GONE);
+                    if (mAnimator != null && mAnimator.isRunning()) {
+                        mAnimator.cancel();
+                    }
+                    mAnimator = ObjectAnimator.ofInt(progressBar, "progress", 0);
+                    mAnimator.setDuration(0);
+                    mAnimator.removeAllListeners();
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 
     @Override

@@ -3,6 +3,7 @@ package com.lsy.lib_base;
 import android.app.Application;
 import android.content.Context;
 
+import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.blankj.utilcode.util.AppUtils;
 import com.blankj.utilcode.util.Utils;
@@ -56,5 +57,10 @@ public class BaseApplication implements IComponentApplication {
         }
         // 尽可能早，推荐在Application中初始化
         ARouter.init(application);
+    }
+
+    @Override
+    public void destory() {
+        ARouter.getInstance().destroy();
     }
 }

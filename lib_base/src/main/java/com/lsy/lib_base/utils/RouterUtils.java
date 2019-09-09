@@ -9,5 +9,5 @@ public class RouterUtils {
     public static final String ME_LOGIN = "/me/main/Login";
 
 
-
+    public static final String TEST = "/me/main/Test";
 }

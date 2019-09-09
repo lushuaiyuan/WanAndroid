@@ -9,4 +9,9 @@ public class NetApplicaiton implements IComponentApplication {
     public void init(Application application) {
         NetWorkManager.getInstance().init();
     }
+
+    @Override
+    public void destory() {
+
+    }
 }
