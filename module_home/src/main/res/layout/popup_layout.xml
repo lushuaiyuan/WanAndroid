@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_pop"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/txt_collect"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:minHeight="@dimen/dp_40"
+        android:paddingLeft="@dimen/dp_8"
+        android:paddingRight="@dimen/dp_8"
+        android:text="收藏"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_content" />
+
+    <View style="@style/MyView" />
+
+    <TextView
+        android:id="@+id/txt_share"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:minHeight="@dimen/dp_40"
+        android:paddingLeft="@dimen/dp_8"
+        android:paddingRight="@dimen/dp_8"
+        android:text="分享"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_content" />
+
+    <View style="@style/MyView" />
+
+    <TextView
+        android:id="@+id/txt_lookinbrowser"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:minHeight="@dimen/dp_40"
+        android:paddingLeft="@dimen/dp_8"
+        android:paddingRight="@dimen/dp_8"
+        android:text="在浏览器打开"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_content" />
+</LinearLayout>

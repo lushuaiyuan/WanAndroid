@@ -3,18 +3,20 @@ package com.lsy.module_home.view;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
-import android.app.Activity;
-import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.ZoomButtonsController;
@@ -27,8 +29,7 @@ import com.lsy.lib_base.utils.RouterUtils;
 import com.lsy.lib_base.widget.QDWebView;
 import com.lsy.module_home.R;
 import com.lsy.module_home.R2;
-import com.qmuiteam.qmui.util.QMUILangHelper;
-import com.qmuiteam.qmui.util.QMUIResHelper;
+import com.qmuiteam.qmui.util.QMUIDisplayHelper;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
@@ -257,8 +258,34 @@ public class WebActivity extends BaseActivity implements View.OnClickListener {
         if (view.getId() == R.id.ib_search) {
             ToastUtils.showShort("查询");
         } else if (view.getId() == R.id.ib_more) {
-            ToastUtils.showShort("更多");
+            initListPopupIfNeed();
+            mListPopup.showAsDropDown(view,  0, QMUIDisplayHelper.dp2px(this, 10));
+        } else if (view.getId() == R.id.txt_collect) {
+            ToastUtils.showShort("收藏");
+            mListPopup.dismiss();
+        } else if (view.getId() == R.id.txt_share) {
+            ToastUtils.showShort("分享");
+            mListPopup.dismiss();
+        } else if (view.getId() == R.id.txt_lookinbrowser) {
+            ToastUtils.showShort("在浏览器中打开");
+            mListPopup.dismiss();
         }
+    }
+
+    private PopupWindow mListPopup;
+
+    private void initListPopupIfNeed() {
+        View popView = LayoutInflater.from(this).inflate(R.layout.popup_layout, null);
+        popView.findViewById(R.id.txt_share).setOnClickListener(this);
+        popView.findViewById(R.id.txt_collect).setOnClickListener(this);
+        popView.findViewById(R.id.txt_lookinbrowser).setOnClickListener(this);
+        mListPopup = new PopupWindow(this);
+        mListPopup.setContentView(popView);
+        mListPopup.setWidth(QMUIDisplayHelper.dp2px(this, 200));
+        mListPopup.setHeight(WRAP_CONTENT);
+        mListPopup.setAnimationStyle(R.style.mypopwindow_anim_style);// 设置动画
+        mListPopup.setBackgroundDrawable(new ColorDrawable(0x00000000));// 设置背景透明
+        mListPopup.setOutsideTouchable(true);
     }
 
     @Override

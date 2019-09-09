@@ -21,10 +21,14 @@
     <color name="tab_normal">#CDCDCD</color>
     <color name="tab_selected">#FF5D5E</color>
     <color name="bar_divider">#D4D6D8</color>
-    
+    <!--view Color-->
+    <color name="view_color">#DEE0E2</color>
     <!--item 颜色-->
     <color name="item_background_normal">#FFFFFF</color>
     <color name="item_background_pressed">#EEEFF1</color>
+    <!--刷新控件得颜色-->
+    <color name="refresh_head_title">#ff666666</color>
+
 
     <color name="white">#FFFFFF</color>
 

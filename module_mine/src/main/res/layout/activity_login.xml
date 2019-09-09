@@ -33,7 +33,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:text="欢迎使用"
-                android:textColor="@color/qmui_config_color_white"
+                android:textColor="@color/white"
                 android:textSize="@dimen/text_headline" />
 
             <TextView
@@ -42,7 +42,7 @@
                 android:layout_marginTop="5dp"
                 android:alpha="0.8"
                 android:text="本APP由luyuan独立开发"
-                android:textColor="@color/qmui_config_color_white"
+                android:textColor="@color/white"
                 android:textSize="@dimen/text_notes" />
 
         </LinearLayout>

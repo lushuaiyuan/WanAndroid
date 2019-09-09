@@ -10,8 +10,8 @@
     </style>
 
     <style name="QDTopBar" parent="QMUI.TopBar">
-        <item name="qmui_topbar_title_color">@color/qmui_config_color_white</item>
-        <item name="qmui_topbar_subtitle_color">@color/qmui_config_color_white</item>
+        <item name="qmui_topbar_title_color">@color/white</item>
+        <item name="qmui_topbar_subtitle_color">@color/white</item>
         <item name="qmui_topbar_height">48dp</item>
         <item name="qmui_topbar_bg_color">@color/app_color_theme_2</item>
         <item name="qmui_topbar_image_btn_height">48dp</item>
