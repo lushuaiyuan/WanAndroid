@@ -21,14 +21,21 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.ZoomButtonsController;
 
+import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.lsy.lib_base.base.BaseActivity;
+import com.lsy.lib_base.base.BaseMvpActivity;
 import com.lsy.lib_base.utils.RouterUtils;
 import com.lsy.lib_base.widget.QDWebView;
+import com.lsy.lib_net.bean.CollectBean;
+import com.lsy.lib_net.bean.Optional;
 import com.lsy.module_home.R;
 import com.lsy.module_home.R2;
+import com.lsy.module_home.contract.WebContract;
+import com.lsy.module_home.presenter.WebPresenter;
 import com.qmuiteam.qmui.util.QMUIDisplayHelper;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
@@ -44,7 +51,7 @@ import butterknife.BindView;
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
 @Route(path = RouterUtils.HOME_WEBVIEW)
-public class WebActivity extends BaseActivity implements View.OnClickListener {
+public class WebActivity extends BaseMvpActivity<WebPresenter> implements WebContract.View, View.OnClickListener {
     @BindView(R2.id.topbar)
     QMUITopBarLayout qmuiTopBar;
     @BindView(R2.id.webview_container)
@@ -56,11 +63,11 @@ public class WebActivity extends BaseActivity implements View.OnClickListener {
     private ProgressHandler mProgressHandler;
     private final static int PROGRESS_PROCESS = 0;
     private final static int PROGRESS_GONE = 1;
-
-    String title;
-    String url;
-    String link;
-    Boolean collect;
+    private String title;
+    private String url;
+    private String link;
+    private Boolean collect;
+    private int id;
 
     @Override
     public int getLayoutId() {
@@ -69,12 +76,16 @@ public class WebActivity extends BaseActivity implements View.OnClickListener {
 
     @Override
     public void init() {
+        mPresenter = new WebPresenter();
+        mPresenter.attachView(this);
+
         mProgressHandler = new ProgressHandler();
         Bundle extras = getIntent().getExtras();
         link = extras.getString("link");
         url = extras.getString("url");
         title = extras.getString("title");
         collect = extras.getBoolean("collect");
+        id = extras.getInt("id");
         initTopBar();
         initWebView();
     }
@@ -157,6 +168,11 @@ public class WebActivity extends BaseActivity implements View.OnClickListener {
 
     protected QMUIWebViewClient getWebViewClient() {
         return new ExplorerWebViewClient(true);
+    }
+
+    @Override
+    public void onSuccess(Optional<CollectBean> collectBean) {
+
     }
 
     public static class ExplorerWebViewChromeClient extends WebChromeClient {
@@ -256,13 +272,17 @@ public class WebActivity extends BaseActivity implements View.OnClickListener {
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.ib_search) {
-            ToastUtils.showShort("查询");
+            ARouter.getInstance().build(RouterUtils.ME_LOGIN).navigation();
         } else if (view.getId() == R.id.ib_more) {
             initListPopupIfNeed();
-            mListPopup.showAsDropDown(view,  0, QMUIDisplayHelper.dp2px(this, 10));
+            mListPopup.showAsDropDown(view, 0, QMUIDisplayHelper.dp2px(this, 10));
         } else if (view.getId() == R.id.txt_collect) {
-            ToastUtils.showShort("收藏");
             mListPopup.dismiss();
+            if (collect) {
+                mPresenter.cancelCollected1(id);
+            } else {
+                mPresenter.collectIn(id);
+            }
         } else if (view.getId() == R.id.txt_share) {
             ToastUtils.showShort("分享");
             mListPopup.dismiss();

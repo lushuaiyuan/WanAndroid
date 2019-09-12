@@ -47,5 +47,7 @@ android {
 }
 
 dependencies {
+    annotationProcessor 'com.alibaba:arouter-compiler:1.2.2'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:10.1.0'
     api project(path: ':lib_net')
 }

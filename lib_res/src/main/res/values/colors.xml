@@ -13,10 +13,11 @@
 
     <color name="color_green">#ff99cc00</color>
     <!--文字颜色-->
-    <color name="text_primary">#333333</color>
-    <color name="text_minor">#666666</color>
-    <color name="text_title">#999999</color>
-    <color name="text_blue">#4282f4</color>
+    <color name="txt_primary">#333333</color>
+    <color name="txt_minor">#666666</color>
+    <color name="txt_title">#999999</color>
+    <color name="txt_blue">#4282f4</color>
+    <color name="txt_theme">#FF5D5E</color>
     <!--底部导航栏颜色-->
     <color name="tab_normal">#CDCDCD</color>
     <color name="tab_selected">#FF5D5E</color>

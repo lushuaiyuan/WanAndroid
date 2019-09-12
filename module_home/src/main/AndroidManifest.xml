@@ -12,6 +12,8 @@
         <activity android:name=".MainActivity">
         </activity>
         <activity android:name=".view.WebActivity" />
+
+        <activity android:name="com.lsy.lib_base.base.TestActivity"/>
     </application>
 
 </manifest>

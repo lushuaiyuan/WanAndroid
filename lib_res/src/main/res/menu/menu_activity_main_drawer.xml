@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+    <!--group 标签加上id 该 组就会出现下划线-->
+    <group
+        android:id="@+id/group_one"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@mipmap/ic_home"
+            android:iconTint="@color/txt_theme"
+            android:title="@string/home" />
+        <item
+            android:id="@+id/nav_integral"
+            android:icon="@mipmap/ic_coin"
+            android:iconTint="@color/txt_theme"
+            android:title="@string/my_integral" />
+        <item
+            android:id="@+id/nav_collect"
+            android:icon="@mipmap/ic_favorite"
+            android:iconTint="@color/txt_theme"
+            android:title="@string/my_collect" />
+    </group>
+    <item
+        android:id="@+id/nav_settings"
+        android:icon="@mipmap/ic_setting"
+        android:iconTint="@color/txt_theme"
+        android:title="@string/setting" />
+
+    <item
+        android:id="@+id/nav_read_later"
+        android:icon="@mipmap/ic_read_later"
+        android:iconTint="@color/txt_theme"
+        android:title="@string/later_read" />
+
+    <item
+        android:id="@+id/nav_about"
+        android:icon="@mipmap/ic_about"
+        android:iconTint="@color/txt_theme"
+        android:title="@string/about" />
+    <!--<item android:title="Communicate">
+        <menu>
+            <item
+                android:id="@+id/nav_share"
+                android:icon="@drawable/ic_clock_date"
+                android:title="Share" />
+            <item
+                android:id="@+id/nav_send"
+                android:icon="@drawable/ic_comments_solid"
+                android:title="Send" />
+        </menu>
+    </item>-->
+
+</menu>

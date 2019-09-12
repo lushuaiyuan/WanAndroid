@@ -86,5 +86,6 @@ public class CustomException {
         int HTTP = 3;
         int HOST = 4;
         int SSL = 5;
+        int FAILED_NOT_LOGIN = -1001;
     }
 }

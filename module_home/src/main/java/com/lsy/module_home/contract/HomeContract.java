@@ -4,6 +4,7 @@ package com.lsy.module_home.contract;
 import com.lsy.lib_base.base.BaseView;
 import com.lsy.lib_net.bean.ArticleBean;
 import com.lsy.lib_net.bean.BannerBean;
+import com.lsy.lib_net.bean.CollectBean;
 import com.lsy.lib_net.bean.HomeBean;
 import com.lsy.lib_net.bean.Optional;
 import com.lsy.lib_net.response.ResponseData;
@@ -34,17 +35,40 @@ public interface HomeContract {
          * @return
          */
         Observable<ResponseData<List<ArticleBean.Article>>> getTopArticleList();
+
+        /**
+         * 收藏
+         *
+         * @param id
+         * @return
+         */
+        Observable<ResponseData<CollectBean>> collect(int id);
+
+        /**
+         * 取消收藏
+         *
+         * @param id
+         * @return
+         */
+        Observable<ResponseData<CollectBean>> cancelCollect(int id);
     }
 
     interface View extends BaseView {
         void onSuccess(Optional<HomeBean> homeBeanResponseData);
 
         void onSuccess1(Optional<ArticleBean> articleResponseData);
+
+        void onSuccess2(Optional<CollectBean> collectResonseData);
+
     }
 
     interface Presenter {
         void articleList(int pageIndex);
 
         void getHomeData();
+
+        void collect(int id);
+
+        void cancelCollect(int id);
     }
 }

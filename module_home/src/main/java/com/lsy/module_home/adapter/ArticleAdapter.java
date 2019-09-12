@@ -42,6 +42,7 @@ public class ArticleAdapter extends BaseQuickAdapter<ArticleBean.Article, BaseVi
         } else {
             ((ImageView) helper.getView(R.id.iv_collect)).setImageResource(R.mipmap.ic_collect);
         }
+        helper.addOnClickListener(R.id.iv_collect);
         ImageView iv_img = helper.getView(R.id.iv_img);
         if (!TextUtils.isEmpty(item.getEnvelopePic())) {
             Glide.with(mContext).load(item.getEnvelopePic()).into(iv_img);

@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.qmuiteam.qmui.widget.QMUIWindowInsetLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:clipChildren="false">
+    android:background="@color/qmui_config_color_background"
+    android:orientation="vertical">
 
     <include layout="@layout/topbar" />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="?qmui_topbar_height"
         android:background="@color/app_color_theme_2"
+        android:layout_marginTop="?attr/qmui_topbar_height"
         android:fitsSystemWindows="true">
 
         <LinearLayout
@@ -56,26 +56,27 @@
             android:clipChildren="false">
 
             <com.qmuiteam.qmui.widget.QMUIRadiusImageView
+                android:id="@+id/iv_2"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_marginLeft="-170dp"
-                android:layout_marginRight="-170dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="-190dp"
+                android:layout_marginRight="-150dp"
+                android:layout_marginBottom="-60dp"
                 android:alpha="0.7"
-                android:background="@drawable/bg_solid_round_color_white_radius_max"
-                />
+                android:background="@drawable/bg_solid_round_color_white_radius_max" />
 
 
             <com.qmuiteam.qmui.widget.QMUIRadiusImageView
+                android:id="@+id/iv_1"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_height="match_parent"
                 android:layout_marginLeft="-150dp"
                 android:layout_marginRight="-190dp"
+                android:layout_marginBottom="-60dp"
                 android:alpha="0.7"
-                android:background="@drawable/bg_solid_round_color_white_radius_max"
-              />
+                android:background="@drawable/bg_solid_round_color_white_radius_max" />
 
-
-            <android.support.v4.view.ViewPager
+            <androidx.viewpager.widget.ViewPager
                 android:id="@+id/vp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -84,17 +85,6 @@
 
         </RelativeLayout>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginBottom="10dp"
-            android:gravity="center"
-            android:text=""
-            android:textColor="@color/text_title"
-            android:textSize="@dimen/text_notes" />
     </RelativeLayout>
 
 

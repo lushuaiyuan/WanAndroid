@@ -1,10 +1,18 @@
 package com.lsy.lib_base.base;
 
+import android.content.Intent;
+import android.util.Log;
+
 import androidx.lifecycle.Lifecycle;
 
+import com.alibaba.android.arouter.facade.Postcard;
+import com.alibaba.android.arouter.facade.callback.NavCallback;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.blankj.utilcode.util.ToastUtils;
 import com.blankj.utilcode.util.Utils;
 import com.lsy.lib_base.exception.ApiException;
+import com.lsy.lib_base.exception.CustomException;
+import com.lsy.lib_base.utils.RouterUtils;
 import com.lsy.lib_base.widget.ProgressDialog;
 import com.uber.autodispose.AutoDispose;
 import com.uber.autodispose.AutoDisposeConverter;
@@ -27,8 +35,11 @@ public abstract class BaseMvpFragment<T extends BasePresenter> extends BaseFragm
     @Override
     public void onError(Throwable throwable) {
         hideLoading();
-
         if (throwable instanceof ApiException) {
+            //TODO
+            if (((ApiException) throwable).getCode() == CustomException.Code.FAILED_NOT_LOGIN) {
+                ARouter.getInstance().build(RouterUtils.ME_LOGIN).navigation();
+            }
             ToastUtils.showShort(((ApiException) throwable).getDisplayMessage());
         } else {
             ToastUtils.showShort(throwable.getMessage());

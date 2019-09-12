@@ -2,16 +2,16 @@
 <com.qmuiteam.qmui.layout.QMUIRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
     android:id="@+id/ll_home_item"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginLeft="@dimen/dp_8"
     android:layout_marginRight="@dimen/dp_8"
     android:layout_marginBottom="@dimen/dp_8"
-    android:background="@drawable/qmui_s_list_item_bg_with_border_none"
-    android:paddingLeft="11dp"
-    android:elevation="14dp"
     android:alpha="0.25"
+    android:background="@drawable/qmui_s_list_item_bg_with_border_none"
+    android:elevation="14dp"
+    android:paddingLeft="11dp"
     android:paddingTop="@dimen/dp_16"
     android:paddingRight="11dp"
     android:paddingBottom="@dimen/dp_16"
@@ -31,7 +31,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:text="hahah"
-            android:textColor="@color/text_minor"
+            android:textColor="@color/txt_minor"
             android:textSize="@dimen/text_auxiliary" />
 
         <TextView
@@ -74,7 +74,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:text="21小时前"
-            android:textColor="@color/text_title"
+            android:textColor="@color/txt_title"
             android:textSize="@dimen/text_time" />
 
     </RelativeLayout>
@@ -102,19 +102,19 @@
             tools:visibility="visible" />
 
 
-            <TextView
-                android:id="@+id/txt_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:includeFontPadding="false"
-                android:lineSpacingExtra="0dp"
-                android:maxLines="3"
-                android:singleLine="false"
-                android:textColor="@color/text_primary"
-                android:textSize="@dimen/text_content"
-                tools:singleLine="true"
-                tools:text="公众号文章列表强势上线公众号文章列表强势公众号文章列表强势上线公众号文章列表强势" />
+        <TextView
+            android:id="@+id/txt_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:includeFontPadding="false"
+            android:lineSpacingExtra="0dp"
+            android:maxLines="3"
+            android:singleLine="false"
+            android:textColor="@color/txt_primary"
+            android:textSize="@dimen/text_content"
+            tools:singleLine="true"
+            tools:text="公众号文章列表强势上线公众号文章列表强势公众号文章列表强势上线公众号文章列表强势" />
 
     </LinearLayout>
 
@@ -125,17 +125,18 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/ll_middle"
         android:layout_marginTop="10dp"
-        android:textColor="@color/text_minor"
+        android:textColor="@color/txt_minor"
         android:textSize="@dimen/text_notes"
         tools:text="动画效果" />
 
 
     <ImageView
         android:id="@+id/iv_collect"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:layout_alignBottom="@+id/txt_classify"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ll_middle"
         android:layout_alignParentRight="true"
+        android:padding="@dimen/dp_8"
         android:src="@mipmap/ic_collect" />
 
 </com.qmuiteam.qmui.layout.QMUIRelativeLayout>

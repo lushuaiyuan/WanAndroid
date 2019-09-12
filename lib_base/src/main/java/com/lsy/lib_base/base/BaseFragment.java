@@ -99,4 +99,10 @@ public abstract class BaseFragment extends Fragment {
             mSmartRefreshLayout.finishLoadMore();
         }
     }
+
+    protected void finish() {
+        if (getActivity() != null) {
+            getActivity().finish();
+        }
+    }
 }

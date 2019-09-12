@@ -3,6 +3,7 @@ package com.lsy.module_home.presenter;
 import com.lsy.lib_base.base.BasePresenter;
 import com.lsy.lib_net.bean.ArticleBean;
 import com.lsy.lib_net.bean.BannerBean;
+import com.lsy.lib_net.bean.CollectBean;
 import com.lsy.lib_net.bean.HomeBean;
 import com.lsy.lib_net.bean.Optional;
 import com.lsy.lib_net.response.ResponseData;
@@ -65,6 +66,7 @@ public class HomePresenter extends BasePresenter<HomeContract.View> implements H
             }
         }).compose(ResponseTransformer.handleResult())
                 .compose(SchedulerProvider.getInstance().applySchedulers())
+                .as(mView.bindAutoDispose())
                 .subscribe(new Consumer<Optional<HomeBean>>() {
                     @Override
                     public void accept(Optional<HomeBean> homeBeanOptional) throws Exception {
@@ -78,5 +80,47 @@ public class HomePresenter extends BasePresenter<HomeContract.View> implements H
                 });
 
 
+    }
+
+    @Override
+    public void collect(int id) {
+        if (!isViewAttached())
+            return;
+        model.collect(id)
+                .compose(ResponseTransformer.handleResult())
+                .compose(SchedulerProvider.getInstance().applySchedulers())
+                .as(mView.bindAutoDispose())
+                .subscribe(new Consumer<Optional<CollectBean>>() {
+                    @Override
+                    public void accept(Optional<CollectBean> collectBeanOptional) throws Exception {
+                        mView.onSuccess2(collectBeanOptional);
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        mView.onError(throwable);
+                    }
+                });
+    }
+
+    @Override
+    public void cancelCollect(int id) {
+        if (!isViewAttached())
+            return;
+        model.cancelCollect(id)
+                .compose(ResponseTransformer.handleResult())
+                .compose(SchedulerProvider.getInstance().applySchedulers())
+                .as(mView.bindAutoDispose())
+                .subscribe(new Consumer<Optional<CollectBean>>() {
+                    @Override
+                    public void accept(Optional<CollectBean> collectBeanOptional) throws Exception {
+                        mView.onSuccess2(collectBeanOptional);
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        mView.onError(throwable);
+                    }
+                });
     }
 }

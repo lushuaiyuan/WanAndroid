@@ -17,6 +17,7 @@ import com.lsy.lib_base.utils.GlideImageLoader;
 import com.lsy.lib_base.utils.RouterUtils;
 import com.lsy.lib_net.bean.ArticleBean;
 import com.lsy.lib_net.bean.BannerBean;
+import com.lsy.lib_net.bean.CollectBean;
 import com.lsy.lib_net.bean.HomeBean;
 import com.lsy.lib_net.bean.Optional;
 import com.lsy.module_home.R;
@@ -38,7 +39,7 @@ import java.util.List;
 import butterknife.BindView;
 
 @Route(path = RouterUtils.HOME_FRAGMENT_MAIN)
-public class HomeFragment extends BaseMvpFragment<HomePresenter> implements HomeContract.View, OnBannerListener, BaseQuickAdapter.OnItemClickListener {
+public class HomeFragment extends BaseMvpFragment<HomePresenter> implements HomeContract.View, OnBannerListener, BaseQuickAdapter.OnItemClickListener, BaseQuickAdapter.OnItemChildClickListener {
     @BindView(R2.id.topbar)
     QMUITopBarLayout qmuiTopBarLayout;
     @BindView(R2.id.mSmartRefreshLayout)
@@ -80,6 +81,8 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
         articleAdapter.openLoadAnimation(BaseQuickAdapter.ALPHAIN);
         mRecycleView.setAdapter(articleAdapter);
         articleAdapter.setOnItemClickListener(this);
+        articleAdapter.setOnItemChildClickListener(this);
+
         mSmartRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
@@ -138,12 +141,28 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
         articleAdapter.notifyDataSetChanged();
     }
 
+    /**
+     * 收藏成功
+     *
+     * @param collectResonseData
+     */
+    @Override
+    public void onSuccess2(Optional<CollectBean> collectResonseData) {
+        if (isCollect) {
+            articleList.get(position).setCollect(true);
+        } else {
+            articleList.get(position).setCollect(false);
+        }
+        articleAdapter.notifyItemChanged(position);
+    }
+
     @Override
     public void OnBannerClick(int position) {
 
         ARouter.getInstance().build(RouterUtils.HOME_WEBVIEW)
                 .withString("title", bannerList.get(position).getTitle())
                 .withString("url", bannerList.get(position).getUrl())
+                .withInt("id", bannerList.get(position).getId())
                 .navigation();
 
     }
@@ -154,6 +173,22 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
                 .withString("title", articleList.get(position).getTitle())
                 .withString("link", articleList.get(position).getLink())
                 .withBoolean("collect", articleList.get(position).isCollect())
+                .withInt("id", bannerList.get(position).getId())
                 .navigation();
+    }
+
+    private int position;
+    private boolean isCollect;
+
+    @Override
+    public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+        this.position = position;
+        if (articleList.get(position).isCollect()) {
+            isCollect = false;
+            mPresenter.cancelCollect(articleList.get(position).getId());
+        } else {
+            isCollect = true;
+            mPresenter.collect(articleList.get(position).getId());
+        }
     }
 }
