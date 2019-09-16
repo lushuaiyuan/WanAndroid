@@ -10,81 +10,86 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/app_color_theme_2"
         android:layout_marginTop="?attr/qmui_topbar_height"
-        android:fitsSystemWindows="true">
-
-        <LinearLayout
-            android:id="@+id/ll_logo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <ImageView
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:scaleType="fitCenter"
-                android:src="@mipmap/logo" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="欢迎使用"
-                android:textColor="@color/white"
-                android:textSize="@dimen/text_headline" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:alpha="0.8"
-                android:text="本APP由luyuan独立开发"
-                android:textColor="@color/white"
-                android:textSize="@dimen/text_notes" />
-
-        </LinearLayout>
+        android:fitsSystemWindows="true"
+        android:orientation="vertical">
 
         <RelativeLayout
-            android:id="@+id/rl_input"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/ll_logo"
-            android:layout_marginTop="30dp"
-            android:clipChildren="false">
+            android:background="@color/app_color_theme_2">
 
-            <com.qmuiteam.qmui.widget.QMUIRadiusImageView
-                android:id="@+id/iv_2"
+            <LinearLayout
+                android:id="@+id/ll_logo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:scaleType="fitCenter"
+                    android:src="@mipmap/logo" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="欢迎使用"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_headline" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:alpha="0.8"
+                    android:text="本APP由luyuan独立开发"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_notes" />
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_input"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="-190dp"
-                android:layout_marginRight="-150dp"
-                android:layout_marginBottom="-60dp"
-                android:alpha="0.7"
-                android:background="@drawable/bg_solid_round_color_white_radius_max" />
+                android:layout_below="@+id/ll_logo"
+                android:layout_marginTop="30dp"
+                android:clipChildren="false">
+
+                <com.qmuiteam.qmui.widget.QMUIRadiusImageView
+                    android:id="@+id/iv_2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="-200dp"
+                    android:layout_marginRight="-160dp"
+                    android:layout_marginBottom="-60dp"
+                    android:alpha="0.7"
+                    android:background="@drawable/bg_solid_round_color_white_radius_max" />
 
 
-            <com.qmuiteam.qmui.widget.QMUIRadiusImageView
-                android:id="@+id/iv_1"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="-150dp"
-                android:layout_marginRight="-190dp"
-                android:layout_marginBottom="-60dp"
-                android:alpha="0.7"
-                android:background="@drawable/bg_solid_round_color_white_radius_max" />
+                <com.qmuiteam.qmui.widget.QMUIRadiusImageView
+                    android:id="@+id/iv_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="-160dp"
+                    android:layout_marginRight="-200dp"
+                    android:layout_marginBottom="-60dp"
+                    android:alpha="0.7"
+                    android:background="@drawable/bg_solid_round_color_white_radius_max" />
 
-            <androidx.viewpager.widget.ViewPager
-                android:id="@+id/vp"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:overScrollMode="never"
-                android:scrollbars="none" />
+                <androidx.viewpager.widget.ViewPager
+                    android:id="@+id/vp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:overScrollMode="never"
+                    android:scrollbars="none" />
 
+            </RelativeLayout>
         </RelativeLayout>
-
     </RelativeLayout>
 
 
