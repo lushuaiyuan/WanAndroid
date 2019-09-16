@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.qmuiteam.qmui.widget.QMUIWindowInsetLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:zhy="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/qmui_config_color_background"
+    android:orientation="vertical">
+
+    <include layout="@layout/topbar" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="?attr/qmui_topbar_height"
+        android:fitsSystemWindows="true"
+        android:padding="@dimen/dp_16">
+
+        <TextView
+            android:id="@+id/tv_hot_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/hotkey"
+            android:textColor="@color/txt_theme"
+            android:textSize="@dimen/text_content" />
+
+        <com.zhy.view.flowlayout.TagFlowLayout
+            android:id="@+id/id_flowlayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_hot_title"
+            android:layout_marginTop="@dimen/dp_8"
+            android:padding="20dp"
+            zhy:max_select="-1"></com.zhy.view.flowlayout.TagFlowLayout>
+
+        <RelativeLayout
+            android:visibility="gone"
+            android:id="@+id/rl_history"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/id_flowlayout"
+            android:padding="@dimen/dp_16">
+
+            <TextView
+                android:id="@+id/tv_history_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/history_search"
+                android:textColor="@color/txt_theme"
+                android:textSize="@dimen/text_content" />
+
+            <TextView
+                android:id="@+id/tv_clear"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:padding="@dimen/dp_8"
+                android:text="清除"
+                android:textSize="@dimen/text_auxiliary" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/lv_history"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/tv_history_title"
+                android:layout_marginTop="@dimen/dp_16" />
+
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+
+
+</com.qmuiteam.qmui.widget.QMUIWindowInsetLayout>

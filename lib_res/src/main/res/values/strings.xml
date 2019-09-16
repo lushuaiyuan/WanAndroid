@@ -18,5 +18,7 @@
     <string name="setting">设置</string>
     <string name="later_read">稍后阅读</string>
     <string name="about">关于</string>
+    <string name="hotkey">热门搜索</string>
+    <string name="history_search">历史搜索</string>
 
 </resources>

@@ -6,6 +6,7 @@ import com.lsy.lib_net.bean.ArticleBean;
 import com.lsy.lib_net.bean.BannerBean;
 import com.lsy.lib_net.bean.CollectBean;
 import com.lsy.lib_net.bean.HomeBean;
+import com.lsy.lib_net.bean.HotkeyBean;
 import com.lsy.lib_net.bean.Optional;
 import com.lsy.lib_net.response.ResponseData;
 
@@ -51,6 +52,9 @@ public interface HomeContract {
          * @return
          */
         Observable<ResponseData<CollectBean>> cancelCollect(int id);
+
+
+
     }
 
     interface View extends BaseView {

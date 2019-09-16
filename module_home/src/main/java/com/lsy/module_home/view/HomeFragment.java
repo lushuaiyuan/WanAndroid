@@ -39,7 +39,7 @@ import java.util.List;
 import butterknife.BindView;
 
 @Route(path = RouterUtils.HOME_FRAGMENT_MAIN)
-public class HomeFragment extends BaseMvpFragment<HomePresenter> implements HomeContract.View, OnBannerListener, BaseQuickAdapter.OnItemClickListener, BaseQuickAdapter.OnItemChildClickListener {
+public class HomeFragment extends BaseMvpFragment<HomePresenter> implements HomeContract.View, OnBannerListener, BaseQuickAdapter.OnItemClickListener, BaseQuickAdapter.OnItemChildClickListener, View.OnClickListener {
     @BindView(R2.id.topbar)
     QMUITopBarLayout qmuiTopBarLayout;
     @BindView(R2.id.mSmartRefreshLayout)
@@ -70,7 +70,7 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
     private void initView() {
         qmuiTopBarLayout.setTitleGravity(Gravity.LEFT);
         qmuiTopBarLayout.setTitle("首页");
-
+        qmuiTopBarLayout.addRightImageButton(R.mipmap.ic_search, 0).setOnClickListener(this);
         mRecycleView.setLayoutManager(new LinearLayoutManager(mActivity));
         articleAdapter = new ArticleAdapter(articleList);
         View view = LayoutInflater.from(mActivity).inflate(R.layout.item_banner, null);
@@ -173,7 +173,7 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
                 .withString("title", articleList.get(position).getTitle())
                 .withString("link", articleList.get(position).getLink())
                 .withBoolean("collect", articleList.get(position).isCollect())
-                .withInt("id", bannerList.get(position).getId())
+                .withInt("id", articleList.get(position).getId())
                 .navigation();
     }
 
@@ -190,5 +190,10 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
             isCollect = true;
             mPresenter.collect(articleList.get(position).getId());
         }
+    }
+
+    @Override
+    public void onClick(View view) {
+        ARouter.getInstance().build(RouterUtils.HOTKEY_SEARCH).navigation();
     }
 }

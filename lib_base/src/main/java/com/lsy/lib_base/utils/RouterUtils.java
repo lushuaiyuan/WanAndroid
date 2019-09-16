@@ -8,5 +8,8 @@ public class RouterUtils {
     //跳转到登录页面
     public static final String ME_LOGIN = "/mine/Login";
 
+    //搜索热词
+    public static final String HOTKEY_SEARCH = "/home/HotKey";
+
 
 }

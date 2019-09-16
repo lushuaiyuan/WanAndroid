@@ -103,4 +103,7 @@ public interface APIService {
     @FormUrlEncoded
     @POST("lg/collect/deletetool/json")
     Observable<ResponseData<CollectBean>> deleteWesite(@Field("id") int id);
+
+    @GET("hotkey/json")
+    Observable<ResponseData<HotkeyBean>> getHotKeyBean();
 }

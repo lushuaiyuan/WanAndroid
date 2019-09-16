@@ -3,6 +3,7 @@ package com.lsy.module_home.view;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
+import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -44,6 +45,7 @@ import com.qmuiteam.qmui.widget.webview.QMUIWebView;
 import com.qmuiteam.qmui.widget.webview.QMUIWebViewClient;
 import com.qmuiteam.qmui.widget.webview.QMUIWebViewContainer;
 
+import java.lang.ref.WeakReference;
 import java.lang.reflect.Field;
 
 import butterknife.BindView;
@@ -79,7 +81,7 @@ public class WebActivity extends BaseMvpActivity<WebPresenter> implements WebCon
         mPresenter = new WebPresenter();
         mPresenter.attachView(this);
 
-        mProgressHandler = new ProgressHandler();
+        mProgressHandler = new ProgressHandler(this);
         Bundle extras = getIntent().getExtras();
         link = extras.getString("link");
         url = extras.getString("url");
@@ -163,7 +165,7 @@ public class WebActivity extends BaseMvpActivity<WebPresenter> implements WebCon
     }
 
     protected WebChromeClient getWebViewChromeClient() {
-        return new ExplorerWebViewChromeClient(this);
+        return new ExplorerWebViewChromeClient();
     }
 
     protected QMUIWebViewClient getWebViewClient() {
@@ -175,24 +177,19 @@ public class WebActivity extends BaseMvpActivity<WebPresenter> implements WebCon
 
     }
 
-    public static class ExplorerWebViewChromeClient extends WebChromeClient {
-        private WebActivity mActivity;
-
-        public ExplorerWebViewChromeClient(WebActivity activity) {
-            mActivity = activity;
-        }
+    private class ExplorerWebViewChromeClient extends WebChromeClient {
 
         @Override
         public void onProgressChanged(WebView view, int newProgress) {
             super.onProgressChanged(view, newProgress);
             // 修改进度条
-            if (newProgress > mActivity.mProgressHandler.mDstProgressIndex) {
-                mActivity.sendProgressMessage(PROGRESS_PROCESS, newProgress, 100);
+            if (newProgress > mProgressHandler.mDstProgressIndex) {
+                sendProgressMessage(PROGRESS_PROCESS, newProgress, 100);
             }
         }
     }
 
-    protected class ExplorerWebViewClient extends QMUIWebViewClient {
+    private class ExplorerWebViewClient extends QMUIWebViewClient {
 
         public ExplorerWebViewClient(boolean needDispatchSafeAreaInset) {
             super(needDispatchSafeAreaInset, true);
@@ -222,7 +219,12 @@ public class WebActivity extends BaseMvpActivity<WebPresenter> implements WebCon
     }
 
 
-    private class ProgressHandler extends Handler {
+    private static class ProgressHandler extends Handler {
+        private final WeakReference<Activity> mActivityReference;
+
+        ProgressHandler(Activity activity) {
+            this.mActivityReference = new WeakReference<>(activity);
+        }
 
         private int mDstProgressIndex;
         private int mDuration;
@@ -231,20 +233,23 @@ public class WebActivity extends BaseMvpActivity<WebPresenter> implements WebCon
 
         @Override
         public void handleMessage(Message msg) {
+            WebActivity webActivity = (WebActivity) mActivityReference.get();
+            if (webActivity == null)
+                return;
             switch (msg.what) {
                 case PROGRESS_PROCESS:
                     mDstProgressIndex = msg.arg1;
                     mDuration = msg.arg2;
-                    progressBar.setVisibility(View.VISIBLE);
+                    webActivity.progressBar.setVisibility(View.VISIBLE);
                     if (mAnimator != null && mAnimator.isRunning()) {
                         mAnimator.cancel();
                     }
-                    mAnimator = ObjectAnimator.ofInt(progressBar, "progress", mDstProgressIndex);
+                    mAnimator = ObjectAnimator.ofInt(webActivity.progressBar, "progress", mDstProgressIndex);
                     mAnimator.setDuration(mDuration);
                     mAnimator.addListener(new AnimatorListenerAdapter() {
                         @Override
                         public void onAnimationEnd(Animator animation) {
-                            if (progressBar.getProgress() == 100) {
+                            if (webActivity.progressBar.getProgress() == 100) {
                                 sendEmptyMessageDelayed(PROGRESS_GONE, 500);
                             }
                         }
@@ -254,12 +259,12 @@ public class WebActivity extends BaseMvpActivity<WebPresenter> implements WebCon
                 case PROGRESS_GONE:
                     mDstProgressIndex = 0;
                     mDuration = 0;
-                    progressBar.setProgress(0);
-                    progressBar.setVisibility(View.GONE);
+                    webActivity.progressBar.setProgress(0);
+                    webActivity.progressBar.setVisibility(View.GONE);
                     if (mAnimator != null && mAnimator.isRunning()) {
                         mAnimator.cancel();
                     }
-                    mAnimator = ObjectAnimator.ofInt(progressBar, "progress", 0);
+                    mAnimator = ObjectAnimator.ofInt(webActivity.progressBar, "progress", 0);
                     mAnimator.setDuration(0);
                     mAnimator.removeAllListeners();
                     break;
@@ -312,6 +317,7 @@ public class WebActivity extends BaseMvpActivity<WebPresenter> implements WebCon
     protected void onDestroy() {
         webViewContainer.destroy();
         mWebView = null;
+        mProgressHandler.removeCallbacksAndMessages(null);
         super.onDestroy();
     }
 }
